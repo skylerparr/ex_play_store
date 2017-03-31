@@ -31,7 +31,7 @@ defmodule ExPlayStore.PurchaseVerification do
     |> as_struct()
   end
 
-  def as_struct(%{
+  defp as_struct(%{
       "consumptionState" => consumption_state,
       "developerPayload" => developer_payload,
       "kind" => kind,
