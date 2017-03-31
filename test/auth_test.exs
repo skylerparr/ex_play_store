@@ -25,9 +25,10 @@ defmodule ExPlayStore.AuthTest do
   test "should fetch access token" do
 		intercept(Tesla, :post, [
 			"https://www.googleapis.com/oauth2/v4/token",
-      any()
-		], with: fn(_,_) ->
-			sample_access_token() |> Poison.encode!
+      any(),
+      [headers: %{"Content-Type" => "application/x-www-form-urlencoded"}]
+		], with: fn(_,_, _) ->
+      %{body: sample_access_token() |> Poison.encode!}
 		end)
     oauth = Auth.refresh_token
 		
@@ -39,7 +40,8 @@ defmodule ExPlayStore.AuthTest do
 			%{
 				grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
 				assertion: "akdsjflasje993rkdfj0if"
-			}
+			},
+      [headers: %{"Content-Type" => "application/x-www-form-urlencoded"}]
 		]) == once()
   end
 

@@ -23,7 +23,7 @@ defmodule ExPlayStore.PurchaseVerificationTest do
     consumed = consumed_receipt()
 
     intercept(Tesla, :get, ["https://www.googleapis.com/androidpublisher/v2/applications/com.example/purchases/products/fire.sale/tokens/09vuisohj", [headers: headers]], with: fn(_,_) ->
-      sample_receipt |> Poison.encode!
+      %{body: sample_receipt |> Poison.encode!}
     end)
     receipt = PurchaseVerification.fetch_receipt("com.example", "fire.sale", "09vuisohj")
     assert receipt == consumed

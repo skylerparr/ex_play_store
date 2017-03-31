@@ -10,6 +10,7 @@ defmodule ExPlayStore.Settings do
     private_key_json() |> Map.get("private_key")
   end
 
+  defp read_file(nil), do: nil
   defp read_file(path) do
     with {:ok, data} <- File.read(path) do
       data

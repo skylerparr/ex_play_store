@@ -14,20 +14,27 @@ defmodule ExPlayStore.Auth do
   @grant_type "urn:ietf:params:oauth:grant-type:jwt-bearer"
 
   def refresh_token do
+
     params = %{
       grant_type: @grant_type,
       assertion: jwt()
     }
+    |> Enum.into([], fn({key, val}) ->
+      "#{key}=#{val}"
+    end)
+    |> Enum.join("&")
 
     %{"access_token" => access_token, 
       "token_type" => token_type,
-      "expires_in" => expires_in} = Tesla.post(@audience, params)
+      "expires_in" => expires_in} = Tesla.post(@audience, params, headers: %{"Content-Type" => "application/x-www-form-urlencoded"})
+    |> Map.get(:body)
     |> Poison.decode!
 
     %AccessToken{
       access_token: access_token,
       token_type: token_type,
-      expires_in: expires_in
+      expires_in: expires_in,
+      expires_at: seconds_since_epoch() + expires_in
     }
   end
 

@@ -49,7 +49,8 @@ defmodule ExPlayStoreOAuthTokenTest do
 
       new_token = %AccessToken{
         access_token: "token",
-        expires_in: Util.seconds_since_epoch - 9600,
+        expires_in: 0,
+        expires_at: Util.seconds_since_epoch() - 1,
         token_type: "type"
       }
       
@@ -64,7 +65,8 @@ defmodule ExPlayStoreOAuthTokenTest do
   defp get_token do
     %AccessToken{
       access_token: "token",
-      expires_in: Util.one_hour_from_now,
+      expires_in: 3600,
+      expires_at: Util.one_hour_from_now(),
       token_type: "type"
     }
   end

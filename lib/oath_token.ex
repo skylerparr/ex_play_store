@@ -20,10 +20,10 @@ defmodule ExPlayStore.OAuthToken do
   end
 
   def store_and_return(token, pid) do
-    if(token.expires_in < seconds_since_epoch()) do
+    if(token.expires_at < seconds_since_epoch()) do
       store_and_return(nil, pid)
     else
-      token
+      %{token | expires_in: token.expires_at - seconds_since_epoch()}
     end
   end
 
