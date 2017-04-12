@@ -5,8 +5,8 @@ defmodule ExPlayStore.Mixfile do
     [app: :ex_play_store,
      version: "0.0.1",
      elixir: "~> 1.4",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
+     description: description(),
+     package: package(),
      deps: deps()]
   end
 
@@ -33,12 +33,30 @@ defmodule ExPlayStore.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
+      {:ex_doc, ">= 0.0.0", only: :dev},
       {:syringe, "~> 0.10.0"},
-      {:poison, "~> 3.0.0", override: true},
+      {:poison, "~> 3.0.0"},
       {:tesla, "~> 0.6.0"},
       {:ibrowse, "~> 4.2"},
       {:env_config, "~> 0.1.0"},
       {:json_web_token, github: "garyf/json_web_token_ex"}
+    ]
+  end
+
+  defp description do
+    """
+    Application to work with google play receipt verification. 
+    Should be extendable to other google play services.
+    """
+  end
+
+  defp package do
+    [
+      name: :ex_play_store,
+      files: ["lib", "mix.exs", "README*", "config"],
+      maintainers: ["Skyler Parr"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/skylerparr/ex_play_store"}
     ]
   end
 end
