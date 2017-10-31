@@ -15,7 +15,7 @@ defmodule ExPlayStore.Settings do
     with {:ok, data} <- File.read(path) do
       data
     else
-      nil
+      error -> error
     end
   end
 
