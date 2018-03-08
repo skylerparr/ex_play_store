@@ -11,5 +11,5 @@
   "mimerl": {:hex, :mimerl, "1.0.2", "993f9b0e084083405ed8252b99460c4f0563e41729ab42d9074fd5e52439be88", [:rebar3], []},
   "poison": {:hex, :poison, "3.1.0", "d9eb636610e096f86f25d9a46f35a9facac35609a7591b3be3326e99a0484665", [:mix], []},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.1", "28a4d65b7f59893bc2c7de786dec1e1555bd742d336043fe644ae956c3497fbe", [:make, :rebar], []},
-  "syringe": {:hex, :syringe, "1.0.0", "3e555897a6e28421cdafb38118bb461791c4b3719517cefcce08c1df508f790e", [:mix], []},
+  "syringe": {:hex, :syringe, "1.1.0", "464e08d8663fae3f59d441a339645f26cb99b3b8c06db5d7ae1319d280a521ff", [:mix], [], "hexpm"},
   "tesla": {:hex, :tesla, "0.6.0", "ede6f50c4f7d57d6787c313c30279b1d7176c362cd6f39993166375f540ec368", [:mix], [{:exjsx, ">= 0.1.0", [hex: :exjsx, optional: true]}, {:fuse, "~> 2.4", [hex: :fuse, optional: true]}, {:hackney, "~> 1.6.0", [hex: :hackney, optional: true]}, {:ibrowse, "~> 4.2", [hex: :ibrowse, optional: true]}, {:poison, ">= 1.0.0", [hex: :poison, optional: true]}]}}
