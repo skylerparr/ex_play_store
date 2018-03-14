@@ -2,6 +2,7 @@ defmodule ExPlayStore.PurchaseVerification do
   use Injector
 
   alias ExPlayStore.PurchaseReceipt
+  alias ExPlayStore.ErrorPurchaseReceipt
 
   inject ExPlayStore.OAuthToken
   inject Tesla
@@ -15,6 +16,7 @@ defmodule ExPlayStore.PurchaseVerification do
     token: ""
   ]
 
+  @spec fetch_receipt(String.t, String.t, String.t) :: %PurchaseReceipt{} | %ErrorPurchaseReceipt{}
   def fetch_receipt(package_name, product_id, token) do
     auth_token = OAuthToken.get()
     headers = %{"Authorization" => "Bearer " <> auth_token.access_token}
@@ -44,6 +46,18 @@ defmodule ExPlayStore.PurchaseVerification do
       kind: kind,
       purchase_state: purchase_state,
       purchase_time_millis: purchase_time_millis
+    }
+  end
+
+  defp as_struct(%{"error" => %{
+        "code" => 400, "errors" =>
+          [%{"domain" => domain, "message" => message, "reason" => reason}],
+    "message" => "Invalid Value"}}
+    ) do
+    %ErrorPurchaseReceipt{
+      domain: domain,
+      message: message,
+      reason: reason
     }
   end
 end
