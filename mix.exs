@@ -36,7 +36,7 @@ defmodule ExPlayStore.Mixfile do
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:syringe, "~> 1.1.0"},
       {:poison, "~> 3.1.0"},
-      {:tesla, "~> 0.6.0"},
+      {:tesla, "~> 0.10.0"},
       {:ibrowse, "~> 4.2"},
       {:env_config, "~> 0.1.0"},
       {:json_web_token, github: "garyf/json_web_token_ex"}
