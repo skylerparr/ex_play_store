@@ -23,11 +23,12 @@ defmodule ExPlayStore.AuthTest do
   end
 
   test "should fetch access token" do
-		intercept(Tesla, :post, [
+		tesla_call = intercept(Tesla, :post, [
+      any(),
 			"https://www.googleapis.com/oauth2/v4/token",
       any(),
-      [headers: %{"Content-Type" => "application/x-www-form-urlencoded"}]
-		], with: fn(_,_, _) ->
+      [headers: ["Content-Type": "application/x-www-form-urlencoded"]]
+		], with: fn(_,_,_, _) ->
       %{body: sample_access_token() |> Poison.encode!}
 		end)
     oauth = Auth.refresh_token
@@ -35,14 +36,7 @@ defmodule ExPlayStore.AuthTest do
  		assert oauth.access_token == sample_access_token() |> Map.get("access_token")
  		assert oauth.token_type == sample_access_token() |> Map.get("token_type")
  		assert oauth.expires_in == sample_access_token() |> Map.get("expires_in")
-		assert was_called(Tesla, :post, [
-			"https://www.googleapis.com/oauth2/v4/token",
-			%{
-				grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
-				assertion: "akdsjflasje993rkdfj0if"
-			},
-      [headers: %{"Content-Type" => "application/x-www-form-urlencoded"}]
-		]) == once()
+		assert tesla_call |> was_called() == once()
   end
 
   defp sample_access_token do

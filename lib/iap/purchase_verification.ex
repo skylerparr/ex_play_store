@@ -19,7 +19,7 @@ defmodule ExPlayStore.PurchaseVerification do
   @spec fetch_receipt(String.t, String.t, String.t) :: %PurchaseReceipt{} | %ErrorPurchaseReceipt{}
   def fetch_receipt(package_name, product_id, token) do
     auth_token = OAuthToken.get()
-    headers = %{"Authorization" => "Bearer " <> auth_token.access_token}
+    headers = ["Authorization": "Bearer " <> auth_token.access_token]
     
     @url
     |> Keyword.update(:package_name, nil, fn(_) -> package_name end)

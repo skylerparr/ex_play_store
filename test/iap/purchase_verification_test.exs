@@ -17,7 +17,7 @@ defmodule ExPlayStore.PurchaseVerificationTest do
         token_type: "Bearer"
       }
     end)
-    headers = %{"Authorization" => "Bearer 34lksjva30d"}
+    headers = ["Authorization": "Bearer 34lksjva30d"]
 
     sample_receipt = sample_receipt()
     consumed = consumed_receipt()
@@ -37,7 +37,7 @@ defmodule ExPlayStore.PurchaseVerificationTest do
         token_type: "Bearer"
       }
     end)
-    headers = %{"Authorization" => "Bearer 34lksjva30d"}
+    headers = ["Authorization": "Bearer 34lksjva30d"]
 
     sample_receipt = sample_failure()
     intercept(Tesla, :get, ["https://www.googleapis.com/androidpublisher/v2/applications/com.example/purchases/products/fire.sale/tokens/09vuisohj", [headers: headers]], with: fn(_,_) ->

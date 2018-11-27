@@ -3,6 +3,7 @@ defmodule ExPlayStore.Auth do
 
   alias ExPlayStore.AccessToken
   alias ExPlayStore.Util
+  alias ExPlayStore.TeslaClient
 
   inject ExPlayStore.Settings
   inject JsonWebToken.Algorithm.RsaUtil
@@ -26,7 +27,7 @@ defmodule ExPlayStore.Auth do
 
     %{"access_token" => access_token, 
       "token_type" => token_type,
-      "expires_in" => expires_in} = Tesla.post(@audience, params, headers: %{"Content-Type" => "application/x-www-form-urlencoded"})
+      "expires_in" => expires_in} = Tesla.post(TeslaClient.client(), @audience, params, headers: ["Content-Type": "application/x-www-form-urlencoded"])
     |> Map.get(:body)
     |> Poison.decode!
 
