@@ -28,6 +28,7 @@ defmodule ExPlayStore.PurchaseVerification do
     |> Keyword.values
     |> Enum.join("")
     |> Tesla.get([headers: headers])
+    |> elem(1)
     |> Map.get(:body)
     |> Poison.decode!
     |> as_struct()

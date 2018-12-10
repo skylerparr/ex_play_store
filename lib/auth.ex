@@ -25,9 +25,10 @@ defmodule ExPlayStore.Auth do
     end)
     |> Enum.join("&")
 
-    %{"access_token" => access_token, 
+    %{"access_token" => access_token,
       "token_type" => token_type,
       "expires_in" => expires_in} = Tesla.post(TeslaClient.client(), @audience, params, headers: ["Content-Type": "application/x-www-form-urlencoded"])
+    |> elem(1)
     |> Map.get(:body)
     |> Poison.decode!
 

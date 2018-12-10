@@ -29,7 +29,7 @@ defmodule ExPlayStore.AuthTest do
       any(),
       [headers: ["Content-Type": "application/x-www-form-urlencoded"]]
 		], with: fn(_,_,_, _) ->
-      %{body: sample_access_token() |> Poison.encode!}
+      {:ok, %Tesla.Env{__client__: %Tesla.Client{adapter: {Tesla.Adapter.Hackney, :call, [[recv_timeout: 30000]]}, fun: nil, post: [], pre: []}, __module__: Tesla, body: "{\n  \"access_token\": \"ya29.c.ElpuBhL6zrCdxWvYbjNmgvKH9H-rsayPkXgoIOBi_5Tl5_7jPV76wTQ9UBwR3VHeVdWtHznK0VpYbVmdgfnnE07RJm6J104sUiKD3VuHTHeWBChnVGaj7ND6zvw\",\n  \"expires_in\": 3600,\n  \"token_type\": \"Bearer\"\n}", headers: [{"content-type", "application/json; charset=utf-8"}, {"vary", "X-Origin"}, {"vary", "Referer"}, {"date", "Mon, 10 Dec 2018 18:43:12 GMT"}, {"server", "ESF"}, {"cache-control", "private"}, {"x-xss-protection", "1; mode=block"}, {"x-frame-options", "SAMEORIGIN"}, {"x-content-type-options", "nosniff"}, {"alt-svc", "quic=\":443\"; ma=2592000; v=\"44,43,39,35\""}, {"accept-ranges", "none"}, {"vary", "Origin,Accept-Encoding"}, {"transfer-encoding", "chunked"}], method: :post, opts: [], query: [], status: 200, url: "https://www.googleapis.com/oauth2/v4/token"}}
 		end)
     oauth = Auth.refresh_token
 		
@@ -40,8 +40,8 @@ defmodule ExPlayStore.AuthTest do
   end
 
   defp sample_access_token do
-		%{
-			"access_token" => "1/8xbJqaOZXSUZbHLl5EOtu1pxz3fmmetKx9W8CV4t79M",
+    %{
+			"access_token" => "ya29.c.ElpuBhL6zrCdxWvYbjNmgvKH9H-rsayPkXgoIOBi_5Tl5_7jPV76wTQ9UBwR3VHeVdWtHznK0VpYbVmdgfnnE07RJm6J104sUiKD3VuHTHeWBChnVGaj7ND6zvw",
 			"token_type" => "Bearer",
 			"expires_in" => 3600
 		} 

@@ -23,7 +23,8 @@ defmodule ExPlayStore.PurchaseVerificationTest do
     consumed = consumed_receipt()
 
     intercept(Tesla, :get, ["https://www.googleapis.com/androidpublisher/v2/applications/com.example/purchases/products/fire.sale/tokens/09vuisohj", [headers: headers]], with: fn(_,_) ->
-      %{body: sample_receipt |> Poison.encode!}
+      body = sample_receipt |> Poison.encode!
+      {:ok, %Tesla.Env{__client__: %Tesla.Client{adapter: {Tesla.Adapter.Hackney, :call, [[recv_timeout: 30000]]}, fun: nil, post: [], pre: []}, __module__: Tesla, body: "#{body}", headers: [{"content-type", "application/json; charset=utf-8"}, {"vary", "X-Origin"}, {"vary", "Referer"}, {"date", "Mon, 10 Dec 2018 18:43:12 GMT"}, {"server", "ESF"}, {"cache-control", "private"}, {"x-xss-protection", "1; mode=block"}, {"x-frame-options", "SAMEORIGIN"}, {"x-content-type-options", "nosniff"}, {"alt-svc", "quic=\":443\"; ma=2592000; v=\"44,43,39,35\""}, {"accept-ranges", "none"}, {"vary", "Origin,Accept-Encoding"}, {"transfer-encoding", "chunked"}], method: :post, opts: [], query: [], status: 200, url: "https://www.googleapis.com/oauth2/v4/token"}}
     end)
     receipt = PurchaseVerification.fetch_receipt("com.example", "fire.sale", "09vuisohj")
     assert receipt == consumed
@@ -41,7 +42,8 @@ defmodule ExPlayStore.PurchaseVerificationTest do
 
     sample_receipt = sample_failure()
     intercept(Tesla, :get, ["https://www.googleapis.com/androidpublisher/v2/applications/com.example/purchases/products/fire.sale/tokens/09vuisohj", [headers: headers]], with: fn(_,_) ->
-      %{body: sample_receipt |> Poison.encode!}
+      body = sample_receipt |> Poison.encode!
+      {:ok, %Tesla.Env{__client__: %Tesla.Client{adapter: {Tesla.Adapter.Hackney, :call, [[recv_timeout: 30000]]}, fun: nil, post: [], pre: []}, __module__: Tesla, body: "#{body}", headers: [{"content-type", "application/json; charset=utf-8"}, {"vary", "X-Origin"}, {"vary", "Referer"}, {"date", "Mon, 10 Dec 2018 18:43:12 GMT"}, {"server", "ESF"}, {"cache-control", "private"}, {"x-xss-protection", "1; mode=block"}, {"x-frame-options", "SAMEORIGIN"}, {"x-content-type-options", "nosniff"}, {"alt-svc", "quic=\":443\"; ma=2592000; v=\"44,43,39,35\""}, {"accept-ranges", "none"}, {"vary", "Origin,Accept-Encoding"}, {"transfer-encoding", "chunked"}], method: :post, opts: [], query: [], status: 200, url: "https://www.googleapis.com/oauth2/v4/token"}}
     end)
 
     receipt = PurchaseVerification.fetch_receipt("com.example", "fire.sale", "09vuisohj")
